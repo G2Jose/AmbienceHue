@@ -8,6 +8,8 @@ import colorsys
 BRIDGE_IP = '192.168.0.10'
 LEFT_LIGHT = 2
 RIGHT_LIGHT  = 0
+# LEFT_LIGHT = 3
+# RIGHT_LIGHT  = 2
 TRANSITION_TIME = 0.1
 
 class ScreenPixel(object):
@@ -61,7 +63,8 @@ if __name__ == '__main__':
         start = time.time()
         yield
         end = time.time()
-        print "%s: %.02fs" % (msg, (end-start))
+        # print "%s: %.02fs" % (msg, (end-start))
+        print "%s: %.02ffps" % ("Framerate:\t", 1.0/(end-start))
 
     b = Bridge(BRIDGE_IP)
     b.connect()
@@ -77,10 +80,17 @@ if __name__ == '__main__':
     sp = ScreenPixel()
     sp.capture()
 
-    COL_INTERVAL = 4
-    ROW_INTERVAL = 50
-    WIDTH = 20
+    COL_INTERVAL = 50
+    ROW_INTERVAL = 100
+    WIDTH = sp.width/20
     HEIGHT = sp.height
+    print "---PARAMETERS---"
+    print "width: \t", WIDTH
+    print "height: \t", HEIGHT
+    print "Rows being processed:\t", int(HEIGHT / ROW_INTERVAL)
+    print "Cols being processed:\t", int(WIDTH / COL_INTERVAL)
+    print "Pixels being processed:\t", int(WIDTH / COL_INTERVAL) * int(HEIGHT / ROW_INTERVAL)
+    
     i = 0
     while True:
         ++i
@@ -91,8 +101,11 @@ if __name__ == '__main__':
         avg_r = 0
         avg_g = 0
         avg_b = 0
-        # sp.capture()
-        # with timer("Averaging"): 
+        # with timer("Computation time:\t"): 
+
+        avg_r = 0
+        avg_g = 0
+        avg_b = 0
         for col in range(WIDTH):
             for row in range(HEIGHT):
                 if row % ROW_INTERVAL == 0 and col % COL_INTERVAL == 0:
@@ -109,9 +122,11 @@ if __name__ == '__main__':
         
         # print "\nLeft HSV: ", h, s, v
         # print "Left RGB: ", avg_r, avg_g, avg_b
-        b.set_light(3, command)
+        b.set_light(LEFT_LIGHT+1, command)
 
-
+        avg_r = 0
+        avg_g = 0
+        avg_b = 0
         for col in range(sp.width - WIDTH, sp.width):
                 for row in range(HEIGHT):
                     if row % ROW_INTERVAL == 0 and col % COL_INTERVAL == 0:
@@ -128,7 +143,7 @@ if __name__ == '__main__':
         
         # print "\nRight HSV: ", h, s, v
         # print "Right RGB: ", avg_r, avg_g, avg_b
-        b.set_light(1, command)
+        b.set_light(RIGHT_LIGHT+1, command)
 
 
 
