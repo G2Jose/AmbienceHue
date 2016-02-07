@@ -39,8 +39,8 @@ A python script that continuously changes Hue lightbulb colors based on what's d
 	```bash
 	cd AmbienceHue
 	```
+	
 - Launch the script using python (tested on 2.7)
-
 
 	```bash
 	python AmbienceHue.py
