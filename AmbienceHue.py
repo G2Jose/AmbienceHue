@@ -17,9 +17,7 @@ class ScreenPixel(object):
         if region is None:
             region = CG.CGRectInfinite
         else:
-            # TODO: Odd widths cause the image to warp. This is likely
-            # caused by offset calculation in ScreenPixel.pixel, and
-            # could could modified to allow odd-widths
+            
             if region.size.width % 2 > 0:
                 emsg = "Capture region width should be even (was %s)" % (
                     region.size.width)

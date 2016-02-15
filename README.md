@@ -2,6 +2,7 @@
 ###Description
 A python script that continuously changes Hue lightbulb colors based on what's displayed on the screen. This script uses the Quartz.CoreGraphics module, which is Mac specific. 
 
+Link to video - https://vimeo.com/154454456
 
 ###How to use
 ####Requirements
