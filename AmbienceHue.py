@@ -6,8 +6,8 @@ import Quartz.CoreGraphics as CG
 import colorsys
 
 BRIDGE_IP = '192.168.0.10'
-LEFT_LIGHT = 2
-RIGHT_LIGHT  = 0
+LEFT_LIGHT = 3
+RIGHT_LIGHT  = 1
 # LEFT_LIGHT = 3
 # RIGHT_LIGHT  = 2
 TRANSITION_TIME = 0.1
@@ -65,6 +65,7 @@ if __name__ == '__main__':
         end = time.time()
         # print "%s: %.02fs" % (msg, (end-start))
         print "%s: %.02ffps" % ("Framerate:\t", 1.0/(end-start))
+        print "%s: %.02fs" % (msg, (end-start))
 
     b = Bridge(BRIDGE_IP)
     b.connect()
@@ -101,33 +102,12 @@ if __name__ == '__main__':
         avg_r = 0
         avg_g = 0
         avg_b = 0
-        # with timer("Computation time:\t"): 
+        with timer("Computation time:\t"): 
 
-        avg_r = 0
-        avg_g = 0
-        avg_b = 0
-        for col in range(WIDTH):
-            for row in range(HEIGHT):
-                if row % ROW_INTERVAL == 0 and col % COL_INTERVAL == 0:
-                    # print(sp.pixel(row, col))
-                    avg_r += sp.pixel(col, row).r
-                    avg_g += sp.pixel(col, row).g
-                    avg_b += sp.pixel(col, row).b
-                    # print (row, col, avg_r)
-        avg_r = avg_r / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
-        avg_g = avg_g / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
-        avg_b = avg_b / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
-        h, s, v = colorsys.rgb_to_hsv((avg_r+0.0)/255, (avg_g+0.0)/255, (avg_b+0.0)/255)
-        command = {'hue': int(h * 65535), 'sat': int(s * 255), 'bri': int(v * 255)}
-        
-        # print "\nLeft HSV: ", h, s, v
-        # print "Left RGB: ", avg_r, avg_g, avg_b
-        b.set_light(LEFT_LIGHT+1, command)
-
-        avg_r = 0
-        avg_g = 0
-        avg_b = 0
-        for col in range(sp.width - WIDTH, sp.width):
+            avg_r = 0
+            avg_g = 0
+            avg_b = 0
+            for col in range(WIDTH):
                 for row in range(HEIGHT):
                     if row % ROW_INTERVAL == 0 and col % COL_INTERVAL == 0:
                         # print(sp.pixel(row, col))
@@ -135,15 +115,36 @@ if __name__ == '__main__':
                         avg_g += sp.pixel(col, row).g
                         avg_b += sp.pixel(col, row).b
                         # print (row, col, avg_r)
-        avg_r = avg_r / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
-        avg_g = avg_g / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
-        avg_b = avg_b / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
-        h, s, v = colorsys.rgb_to_hsv((avg_r+0.0)/255, (avg_g+0.0)/255, (avg_b+0.0)/255)
-        command = {'hue': int(h * 65535), 'sat': int(s * 255), 'bri': int(v * 255)}
-        
-        # print "\nRight HSV: ", h, s, v
-        # print "Right RGB: ", avg_r, avg_g, avg_b
-        b.set_light(RIGHT_LIGHT+1, command)
+            avg_r = avg_r / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
+            avg_g = avg_g / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
+            avg_b = avg_b / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
+            h, s, v = colorsys.rgb_to_hsv((avg_r+0.0)/255, (avg_g+0.0)/255, (avg_b+0.0)/255)
+            command = {'hue': int(h * 65535), 'sat': int(s * 255), 'bri': int(v * 255)}
+            
+            # print "\nLeft HSV: ", h, s, v
+            # print "Left RGB: ", avg_r, avg_g, avg_b
+            b.set_light(LEFT_LIGHT+1, command)
+
+            avg_r = 0
+            avg_g = 0
+            avg_b = 0
+            for col in range(sp.width - WIDTH, sp.width):
+                    for row in range(HEIGHT):
+                        if row % ROW_INTERVAL == 0 and col % COL_INTERVAL == 0:
+                            # print(sp.pixel(row, col))
+                            avg_r += sp.pixel(col, row).r
+                            avg_g += sp.pixel(col, row).g
+                            avg_b += sp.pixel(col, row).b
+                            # print (row, col, avg_r)
+            avg_r = avg_r / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
+            avg_g = avg_g / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
+            avg_b = avg_b / (WIDTH * HEIGHT / COL_INTERVAL / ROW_INTERVAL)
+            h, s, v = colorsys.rgb_to_hsv((avg_r+0.0)/255, (avg_g+0.0)/255, (avg_b+0.0)/255)
+            command = {'hue': int(h * 65535), 'sat': int(s * 255), 'bri': int(v * 255)}
+            
+            # print "\nRight HSV: ", h, s, v
+            # print "Right RGB: ", avg_r, avg_g, avg_b
+            b.set_light(RIGHT_LIGHT+1, command)
 
 
 
