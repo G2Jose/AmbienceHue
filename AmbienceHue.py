@@ -67,8 +67,8 @@ if __name__ == '__main__':
 
     b = Bridge(BRIDGE_IP)
     b.connect()
-    b.set_light(3, 'on', True)
-    b.set_light(1, 'on', True)
+    b.set_light(LEFT_LIGHT+1, 'on', True)
+    b.set_light(RIGHT_LIGHT+1, 'on', True)
     lights = b.lights
     lights[LEFT_LIGHT].transitiontime = TRANSITION_TIME
     lights[RIGHT_LIGHT].transitiontime = TRANSITION_TIME
