@@ -44,7 +44,7 @@ alt="IMAGE ALT TEXT HERE" width="480" height="360" border="10" /></a>
 	cd AmbienceHue
 	```
 
-- Launch the script using python (tested on 2.7)
+- Launch the script using python (tested on 3.5.2)
 
 	```bash
 	python AmbienceHue.py
