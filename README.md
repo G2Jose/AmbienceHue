@@ -5,7 +5,7 @@ A python script that continuously changes Hue lightbulb colors based on what's d
 [Video](http://www.youtube.com/watch?feature=player_embedded&v=pHmz-tI5FK0)
 
 <div style="text-align:center; align:center"<a href="http://www.youtube.com/watch?feature=player_embedded&v=pHmz-tI5FK0
-" target="_blank"><img src="http://img.youtube.com/vi/pHmz-tI5FK0/0.jpg" 
+" target="_blank"><img style="text-align:center;" src="http://img.youtube.com/vi/pHmz-tI5FK0/0.jpg" 
 alt="Demo video" width="480" height="360" border="10" /></a></div>
 
 ## How to use
