@@ -5,8 +5,13 @@ import numpy as np
 from phue import Bridge
 import colorsys
 import time
-
 import contextlib
+
+BRIDGE_IP = '10.88.111.1'
+LEFT_LIGHT = 2
+RIGHT_LIGHT = 1
+TRANSITION_TIME = 0.1
+WIDTH = 50
 
 @contextlib.contextmanager
 def timer(msg):
@@ -16,7 +21,7 @@ def timer(msg):
     print("Framerate:\t", str(1.0 / (end - start)))
     print("Time:\t", str(end - start))
 
-BRIDGE_IP = '10.88.111.1'
+
 
 class Screen:
     def capture(self, region = None):
@@ -44,9 +49,9 @@ class Hue:
     def __init__(self, ip):
         self.b = Bridge(ip)
         self.b.connect()
-        self.RIGHT = 1
-        self.LEFT = 2
-        self.TRANSITION_TIME = 0
+        self.RIGHT = RIGHT_LIGHT
+        self.LEFT = LEFT_LIGHT
+        self.TRANSITION_TIME = TRANSITION_TIME
         self.b.lights[self.LEFT].transitiontime = self.TRANSITION_TIME
         self.b.lights[self.RIGHT].transitiontime = self.TRANSITION_TIME
         self.blink(self.LEFT)
@@ -86,8 +91,6 @@ sp = Screen()
 while True:
     try:
         img = sp.capture()
-        
-        WIDTH = 50
         left = img[:, 0:WIDTH, :]
         right = img[:, -WIDTH:, :]
         lr, lg, lb = np.mean(left[:, :, 0]), np.mean(left[:, :, 1]), np.mean(left[:, :, 2])
